@@ -22,6 +22,7 @@ resource "aws_iam_user" "iam_users" {
 #   value = { for idx, users in var.user_names : idx => users }
 # }
 
+# values takes a map and returns a list containing the values of the elements in that map.
 # output "name2" {
 #   value = [values(aws_iam_user.iam_users)[*].name]
 # }
