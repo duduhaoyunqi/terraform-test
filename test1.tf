@@ -1,4 +1,5 @@
 # 测试map取数，5种方法都可以日后回顾使用
+# https://developer.hashicorp.com/terraform/language/expressions/for
 
 variable "user_names" {
   description = "IAM usernames"
