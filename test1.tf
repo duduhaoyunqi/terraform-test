@@ -34,7 +34,7 @@ resource "aws_iam_user" "iam_users" {
 #   value = [for k,v in aws_iam_user.iam_users: v.name]
 # }
 
-# for v in aws_iam_user.iam_users : v
+# for v in var.map : v
 # output "name5-1" {
 #   value = [for user in aws_iam_user.iam_users : user]
 # }
