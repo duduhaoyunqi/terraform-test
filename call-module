@@ -1,0 +1,91 @@
+# module/main.tf
+
+data "aws_subnets" "example" {
+  filter {
+    name   = "vpc-id"
+    values = ["vpc-008bc5ecaeb637bab"]
+  }
+}
+
+resource "aws_instance" "ec2_instances" {
+  for_each = { for k, v in var.instances : k => v }
+
+  ami           = each.value.ami
+  subnet_id     = each.value.subnet
+  instance_type = each.value.instance_type
+
+  security_groups = each.value.security_groups
+
+  root_block_device {
+    tags = each.value.root_block_device.tags
+  }
+
+  tags = each.value.tags
+}
+
+output "subnet_ids" {
+  value = data.aws_subnets.example.ids
+}
+
+# ec2.tf
+locals {
+  instance = {
+    wpfblogirbrd01 = {
+      ami             = "ami-00363e1c1dd163a83"
+      subnet          = "Subnet-1a"
+      security_groups = ["sgpawsgpfbminframgmt01", "sgpawsgpfbminfraauth01", "sgpawsgpfbmlogireportdashboarddata01"]
+      instance_type   = "m5.4xlarge"
+      root_block_device = {
+        tags = {
+          Name        = "ebsawsgpfbm-wpfblogirbrd01-system-xfs-root"
+          Portfolio   = "FbM"
+          Platform    = "FulfilmentPlatform"
+          Product     = "Logi_Report"
+          Environment = "PRD"
+          Account     = "FbM_Prod"
+        }
+      }
+      tags = {
+        Portfolio   = "FbM"
+        Platform    = "FulfilmentPlatform"
+        Product     = "Logi_Report"
+        Environment = "PRD"
+        Account     = "FbM_Prod"
+        AppOwner    = "daniel.loo@maersk.com"
+      }
+    },
+    wpfblogirweb01 = {
+      ami             = "ami-00363e1c1dd163a83"
+      subnet          = "Subnet-1b"
+      security_groups = ["sgpawsgpfbminframgmt01", "sgpawsgpfbminfraauth01", "sgpawsgpfbmlogireportdata01"]
+      instance_type   = "r5.8xlarge"
+      root_block_device = {
+        tags = {
+          Name        = "ebsawsgpfbm-wpfblogirweb01-system-xfs-root"
+          Portfolio   = "FbM"
+          Platform    = "FulfilmentPlatform"
+          Product     = "Logi_Report"
+          Environment = "PRD"
+          Account     = "FbM_Prod"
+        }
+      }
+      tags = {
+        Portfolio   = "FbM"
+        Platform    = "FulfilmentPlatform"
+        Product     = "Logi_Report"
+        Environment = "PRD"
+        Account     = "FbM_Prod"
+        AppOwner    = "daniel.loo@maersk.com"
+      }
+    }
+  }
+}
+
+module "ec2_instances" {
+  source = "D:/IaC/module/Module-test2"
+  instances = { for k, v in local.instance: k => v }
+}
+
+output "subnet_ids" {
+  value = module.ec2_instances.subnet_ids
+}
