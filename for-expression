@@ -1,0 +1,62 @@
+locals {
+  instance = {
+    wpfblogirbrd01 = {
+      ami             = "ami-00363e1c1dd163a83"
+      subnet          = "subawssgpfbmwebb001"
+      security_groups = ["sgpawsgpfbminframgmt01", "sgpawsgpfbminfraauth01", "sgpawsgpfbmlogireportdashboarddata01"]
+      instance_type   = "m5.4xlarge"
+      root_block_device = {
+        tags = {
+          Name        = "ebsawsgpfbm-wpfblogirbrd01-system-xfs-root"
+          Portfolio   = "FbM"
+          Platform    = "FulfilmentPlatform"
+          Product     = "Logi_Report"
+          Environment = "PRD"
+          Account     = "FbM_Prod"
+        }
+      }
+      tags = {
+        Portfolio   = "FbM"
+        Platform    = "FulfilmentPlatform"
+        Product     = "Logi_Report"
+        Environment = "PRD"
+        Account     = "FbM_Prod"
+        AppOwner    = "daniel.loo@maersk.com"
+      }
+    },
+    wpfblogirweb01 = {
+      ami             = "ami-00363e1c1dd163a83"
+      subnet          = "subawssgpfbmwebb001"
+      security_groups = ["sgpawsgpfbminframgmt01", "sgpawsgpfbminfraauth01", "sgpawsgpfbmlogireportdata01"]
+      instance_type   = "r5.8xlarge"
+      root_block_device = {
+        tags = {
+          Name        = "ebsawsgpfbm-wpfblogirweb01-system-xfs-root"
+          Portfolio   = "FbM"
+          Platform    = "FulfilmentPlatform"
+          Product     = "Logi_Report"
+          Environment = "PRD"
+          Account     = "FbM_Prod"
+        }
+      }
+      tags = {
+        Portfolio   = "FbM"
+        Platform    = "FulfilmentPlatform"
+        Product     = "Logi_Report"
+        Environment = "PRD"
+        Account     = "FbM_Prod"
+        AppOwner    = "daniel.loo@maersk.com"
+      }
+    }
+  }
+}
+
+{ for k, v in local.instance: k => v }：
+这是一个使用 Terraform 的 for 表达式创建一个新的 map 的方法，其中键是 local.instance 中每个元素的键，而值是相应的值。这种写法是一种迭代 map 元素的方式，并且可以用来转换或筛选元素。
+
+
+
+
+
+
+
