@@ -34,7 +34,7 @@ locals {
       ami             = "ami-00363e1c1dd163a83"
       subnet          = "Subnet-1a"
       security_groups = ["sgpawsgpfbminframgmt01", "sgpawsgpfbminfraauth01", "sgpawsgpfbmlogireportdashboarddata01"]
-      instance_type   = "m5.4xlarge"
+      instance_type   = "t2.micro"
       root_block_device = {
         tags = {
           Name        = "ebsawsgpfbm-wpfblogirbrd01-system-xfs-root"
@@ -58,7 +58,7 @@ locals {
       ami             = "ami-00363e1c1dd163a83"
       subnet          = "Subnet-1b"
       security_groups = ["sgpawsgpfbminframgmt01", "sgpawsgpfbminfraauth01", "sgpawsgpfbmlogireportdata01"]
-      instance_type   = "r5.8xlarge"
+      instance_type   = "t2.micro"
       root_block_device = {
         tags = {
           Name        = "ebsawsgpfbm-wpfblogirweb01-system-xfs-root"
