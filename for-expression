@@ -51,8 +51,32 @@ locals {
   }
 }
 
-{ for k, v in local.instance: k => v }：
-这是一个使用 Terraform 的 for 表达式创建一个新的 map 的方法，其中键是 local.instance 中每个元素的键，而值是相应的值。这种写法是一种迭代 map 元素的方式，并且可以用来转换或筛选元素。
+module "ec2_instances" {
+  source = "D:/IaC/module/Module-test2"
+  instances = { for k, v in local.instance: k => v }
+}
+
+module "ec2_instances" {
+  source = "D:/IaC/module/Module-test2"
+  instances = local.instance
+}
+
+# local.instance和{ for k, v in local.instance: k => v }的值一样吗?
+在 Terraform 中，local.instance 和 { for k, v in local.instance: k => v } 这两者的值是相同的，但是它们的形式稍有不同。
+1. local.instance：
+这是直接引用局部变量 instance 的方式。如果局部变量 instance 是一个 map 类型，那么 local.instance 将是这个 map 的完整副本。
+local.instance = {
+  instance_type = "t2.micro"
+  ami_id        = "ami-12345678"
+  subnet_id     = "subnet-12345678"
+}
+2. { for k, v in local.instance: k => v }：
+这是使用 Terraform 的 for 表达式创建一个新的 map 的方法，其中键是 local.instance 中每个元素的键，而值是相应的值。
+{
+  instance_type = "t2.micro"
+  ami_id        = "ami-12345678"
+  subnet_id     = "subnet-12345678"
+}
 
 
 
