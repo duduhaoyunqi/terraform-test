@@ -1,0 +1,86 @@
+# First, let's create a module named network_interface that will define an AWS network interface. 
+# Then, we'll create another module named ec2_instance which will use the network_interface module and create an EC2 instance associated with the network interface.
+
+project/
+├── modules/
+│   ├── network_interface/
+│   │   ├── main.tf
+│   │   └── variables.tf
+│   └── ec2_instance/
+│       ├── main.tf
+│       └── variables.tf
+└── main.tf
+
+
+# Contents of modules/network_interface/main.tf:
+resource "aws_network_interface" "example" {
+  subnet_id = var.subnet_id
+  private_ips = var.private_ips
+  security_groups = var.security_groups
+  attachment {
+    instance = var.instance_id
+  }
+}
+
+
+# Contents of modules/network_interface/variables.tf:
+variable "subnet_id" {}
+variable "private_ips" {
+  type = list(string)
+}
+variable "security_groups" {
+  type = list(string)
+}
+variable "instance_id" {}
+
+
+# Contents of modules/ec2_instance/main.tf:
+module "network_interface" {
+  source = "../network_interface"
+  subnet_id = var.subnet_id
+  private_ips = var.private_ips
+  security_groups = var.security_groups
+  instance_id = aws_instance.example.id
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  # other instance configurations
+}
+
+
+# Contents of modules/ec2_instance/variables.tf:
+variable "subnet_id" {}
+variable "private_ips" {
+  type = list(string)
+}
+variable "security_groups" {
+  type = list(string)
+}
+
+
+# Finally, the main.tf in the root directory:
+module "ec2_instance" {
+  source = "./modules/ec2_instance"
+  subnet_id = "subnet-12345678"
+  private_ips = ["10.0.1.10"]
+  security_groups = ["sg-12345678"]
+}
+
+
+# In this setup:
+# The network_interface module defines an AWS network interface.
+# The ec2_instance module uses the network_interface module and creates an EC2 instance associated with the network interface.
+# The main.tf in the root directory uses the ec2_instance module and provides necessary input variables.
+# 这种结构允许模块化和封装，使得在Terraform配置中更容易管理和重用组件。
+
+
+
+
+
+
+
+
+
+
