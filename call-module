@@ -83,7 +83,7 @@ locals {
 
 module "ec2_instances" {
   source = "D:/IaC/module/Module-test2"
-  instances = { for k, v in local.instance: k => v }
+  instances = { for k, v in local.instance: k => v }  # instances = local.instance也可以
 }
 
 output "subnet_ids" {
