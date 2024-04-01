@@ -62,7 +62,7 @@ output "ingress_rules_map" {
 
 output "ingress_from_ports" {
   value = {
-    for key, rule in var.ingress_rules:
+    for key, rule in var.ingress_rules:  #ingress_rules是map，这个map里有两个key-value pair
       key => rule.from_port
   }
 }
@@ -72,7 +72,7 @@ output "ingress_from_ports" {
 #     }
 
 output "values_ingress_rules" {
-  value = values(var.ingress_rules)
+  value = values(var.ingress_rules)  #values takes a map and returns a list containing the values of the elements in that map.
 }
 #   + values_ingress_rules    = [
 #       + {
