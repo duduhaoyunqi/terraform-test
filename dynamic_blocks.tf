@@ -1,5 +1,5 @@
-# variables.tf
-variable "ingress_rules" {
+#variables.tf
+variable "ingress_rules" {  #ingress_rules is map of object with 2 elements, This map does not have an element with the key "value", 所以ingress_rules.value是错的。
   type = map(object({
     from_port   = number
     to_port     = number
