@@ -1,6 +1,32 @@
-
+#字典
 Map: key-value pairs; values must be of the same type; 键值对; 值必须具有相同的类型;
 for example, variable "config_value” { type = map(string) }
 
+
+#对象
 Object: KEY = VALUE; value can be of any type; Value可以是任何类型;
 for example, variable "instance_settings"object({instance_type=string, monitoring=bool})
+
+variable "ingress_rules" {
+  type = map(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = {
+    ssh = {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    http = {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+}
+
