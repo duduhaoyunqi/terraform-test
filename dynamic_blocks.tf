@@ -30,7 +30,7 @@ resource "aws_security_group" "example" {
   dynamic "ingress" {
     for_each = var.ingress_rules
     content {
-      from_port   = ingress.value.from_port
+      from_port   = ingress.value.from_port   #If omitted the iterator argument, the name of the variable defaults to the label of the dynamic block.
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
       cidr_blocks = ingress.value.cidr_blocks
