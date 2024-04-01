@@ -1,0 +1,6 @@
+
+Map: key-value pairs; values must be of the same type; 键值对; 值必须具有相同的类型;
+for example, variable "config_value” { type = map(string) }
+
+Object: KEY = VALUE; value can be of any type; Value可以是任何类型;
+for example, variable "instance_settings"object({instance_type=string, monitoring=bool})
